@@ -1,0 +1,22 @@
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-card author-card">
+    <div class="author-avatar">
+      <img src="<%- url_for(theme.favicon || '/images/favicon.png') %>" alt="<%= config.author %>">
+    </div>
+    <h3 class="author-name"><%= config.author %></h3>
+    <p class="author-bio"><%= config.description || '' %></p>
+    <% if (theme.social && Object.keys(theme.social).length) { %>
+      <div class="social-links">
+        <% for (var name in theme.social) { %>
+          <a href="<%= theme.social[name] %>" class="social-link" target="_blank" rel="noopener" title="<%= name %>"><%= name %></a>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (theme.widgets && theme.widgets.length) { %>
+    <% theme.widgets.forEach(function(widget) { %>
+      <%- partial('widget/' + widget) %>
+    <% }) %>
+  <% } %>
+</aside>

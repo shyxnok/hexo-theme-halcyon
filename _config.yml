@@ -1,0 +1,48 @@
+# ============================================================
+# Halcyon Theme Configuration
+# ============================================================
+
+# Favicon (relative to theme source directory)
+favicon: /images/favicon.png
+
+# Site brand text shown in header (fallback to site title)
+site_brand: Halcyon
+
+# Navigation menu
+menu:
+  Home: /
+  Archives: /archives
+  Categories: /categories
+  Tags: /tags
+  About: /about
+
+# Social links (shown in sidebar)
+social:
+  GitHub: https://github.com/
+  Twitter: https://twitter.com/
+
+# Sidebar widgets (order matters)
+# Available: categories, tags, archives, recent_posts, tagcloud
+widgets:
+  - categories
+  - tags
+  - archives
+  - recent_posts
+
+# Show post count next to categories/tags/archives
+show_count: true
+
+# Number of recent posts to show in sidebar
+recent_posts_limits: 5
+
+# Google Analytics tracking ID (leave empty to disable)
+google_analytics:
+
+# Theme accent colors
+colors:
+  accent: "#6c5ce7"
+  accent_hover: "#5a4bd1"
+
+# Code syntax highlighting theme
+highlight:
+  theme: default

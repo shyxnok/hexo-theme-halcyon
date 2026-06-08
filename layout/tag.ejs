@@ -1,0 +1,18 @@
+<div class="tag-page">
+  <h2 class="page-heading"><%= __('tag') %>: <%= page.tag %></h2>
+
+  <% if (page.posts.length) { %>
+    <ul class="post-list-simple">
+      <% page.posts.each(function(post) { %>
+        <li>
+          <time datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>">
+            <%= date(post.date, 'YYYY-MM-DD') %>
+          </time>
+          <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="empty-message"><%= __('no_posts') %></p>
+  <% } %>
+</div>

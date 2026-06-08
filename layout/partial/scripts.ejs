@@ -1,0 +1,16 @@
+<script src="<%- url_for('/js/main.js') %>"></script>
+
+<% if (theme.google_analytics) { %>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= theme.google_analytics %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '<%= theme.google_analytics %>');
+</script>
+<% } %>
+
+<% if (config.syntax_highlighter === 'highlight.js') { %>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<% } %>

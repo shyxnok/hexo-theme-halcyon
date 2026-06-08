@@ -1,2 +1,2 @@
-# hexo-theme-Halcyon
+# hexo-theme-halcyon
 hexo主题
