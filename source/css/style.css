@@ -19,6 +19,9 @@
   --color-card-shadow: rgba(61, 50, 44, 0.05);
   --color-code-bg: #f3efe8;
   --color-code-text: #3d322c;
+  --grey-3: #eff2f3;
+  --color-pink-light: #ffe6fa;
+  --grey-1-a5: rgba(253,253,253,0.5);
   --color-tag-bg: #f2e4da;
   --color-tag-text: #c97d60;
   --color-header-bg: rgba(250, 248, 245, 0.92);
@@ -532,4 +535,42 @@ img { max-width: 100%; height: auto; }
   pointer-events: none;
   transform: translate(-50%, -50%);
   opacity: 0.8;
+}
+/* --------------------------------------------------------
+   16. scrollbar
+   -------------------------------------------------------- */
+
+/* 选中整个滚动条区域 */
+::-webkit-scrollbar {
+  width: 0.3125rem;   /* 垂直滚动条宽度 = 5px */
+  height: 0.3125rem;  /* 水平滚动条高度 = 5px */
+  background: transparent; /* 滚动条背景透明 */
+}
+::-webkit-scrollbar-track {
+  border-radius: 0.3125rem; /* 轨道圆角 5px */
+  background: transparent; /* 轨道背景完全透明 */
+}
+::-webkit-scrollbar-track-piece {
+  background: transparent; /* 透明 */
+}
+::-webkit-scrollbar-button {
+  background: transparent;
+  height: 0; /* 高度设为 0 → 彻底隐藏箭头 */
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 1.25rem; /* 滑块大圆角，更圆润 */
+  background-clip: padding-box; /* 防止背景溢出圆角 */
+  
+  background-color: var(--grey-3); /* 主色：灰色系 */
+  
+  /* 斜纹条纹效果（高级感） */
+  background-image: linear-gradient(45deg, 
+    var(--grey-1-a5) 25%, 
+    transparent 0, 
+    transparent 50%, 
+    var(--grey-1-a5) 0, 
+    var(--grey-1-a5) 75%, 
+    transparent 0, 
+    transparent
+  );
 }

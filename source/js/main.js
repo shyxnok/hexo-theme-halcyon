@@ -75,234 +75,192 @@ console.log("%c Theme.Halcyon v" + '1.0.0' + " %c https://github.com/shyxnok/hex
   });
 })();
 
+
+
 /**
- * Mouse Click Particle Effect - Exact implementation from kaitaku.xyz
- * 鼠标点击粒子特效（已移除长按功能）
+ * 点击烟花粒子特效 - 独立抽离版
+ * 依赖: anime.js
  */
-(function() {
-  // 开启严格模式，规避JS不规范写法，提升代码健壮性
-  'use strict';
-
-  // 存储所有粒子实例
-  var balls = [];
-  // 画布宽高
-  var width, height;
-  // 画布中心点坐标
-  var origin;
-  // 粒子偏移修正量
-  var normal;
-  // Canvas 2D绘图上下文
-  var ctx;
-  // 粒子配色数组（半透彩色）
-  var colours = [
-    'rgba(255,182,185,.9)',
-    'rgba(250,227,217,.9)',
-    'rgba(187,222,214,.9)',
-    'rgba(138,198,209,.9)'
-  ];
-  // 存储点击产生的白色圆环波纹
-  var rings = [];
-  // 创建画布元素，用于渲染粒子和圆环
-  var canvas = document.createElement('canvas');
-  // 创建鼠标跟随圆点元素
-  var pointer = document.createElement('span');
-
-  /**
-   * 特效初始化入口函数
-   */
-  function clickEffect() {
-    // 将画布插入页面body
-    document.body.appendChild(canvas);
-    // 设置画布样式：全屏固定、层级最高、不拦截鼠标事件
-    canvas.setAttribute('style', 'width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;');
-    // 给鼠标圆点添加样式类并插入页面
-    pointer.classList.add('pointer');
-    document.body.appendChild(pointer);
-
-    // 检测浏览器是否支持Canvas和事件监听
-    if (canvas.getContext && window.addEventListener) {
-      // 获取2D绘图上下文
-      ctx = canvas.getContext('2d');
-      // 初始化画布尺寸
-      updateSize();
-      // 监听窗口大小变化，实时适配画布
-      window.addEventListener('resize', updateSize, false);
-      // 启动动画主循环
-      loop();
-
-      // 监听鼠标按下事件，生成粒子+圆环
-      window.addEventListener('mousedown', function(e) {
-        // 生成 30~50 个粒子，位置为鼠标点击坐标
-        pushBalls(randBetween(30, 50), e.clientX, e.clientY);
-        // 添加白色圆环波纹，初始半径6，透明度生命周期1
-        rings.push({ x: e.clientX, y: e.clientY, r: 6, life: 1 });
-      }, false);
-
-    } else {
-      // 浏览器不兼容时控制台提示
-      console.log('canvas or addEventListener is unsupported!');
-    }
-  }
-
-  /**
-   * 更新画布尺寸（窗口缩放时调用）
-   */
-  function updateSize() {
-    // 画布实际像素宽高放大2倍，适配高清屏
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
-    // 画布展示尺寸设为浏览器可视区域大小
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    // 绘图缩放2倍，保证高清绘制
-    ctx.scale(2, 2);
-    // 记录可视区域宽高
-    width = (canvas.width = window.innerWidth);
-    height = (canvas.height = window.innerHeight);
-    // 记录画布中心点
-    origin = { x: width / 2, y: height / 2 };
-    // 初始化粒子偏移修正值
-    normal = { x: width / 2, y: height / 2 };
-  }
-
-  /**
-   * 粒子构造函数：创建单个粒子
-   * @param {number} x - 粒子初始X坐标
-   * @param {number} y - 粒子初始Y坐标
-   */
-  function Ball(x, y) {
-    // 粒子当前坐标
-    this.x = x;
-    this.y = y;
-    // 粒子飞行角度（0 ~ 360° 随机）
-    this.angle = Math.PI * 2 * Math.random();
-    // 粒子基础移动倍率（控制飞行距离）
-    this.multiplier = randBetween(6, 12);
-    // X轴方向速度
-    this.vx = (this.multiplier + Math.random() * 0.6) * Math.cos(this.angle);
-    // Y轴方向速度
-    this.vy = (this.multiplier + Math.random() * 0.6) * Math.sin(this.angle);
-    // 粒子初始半径（基础4~7 + 随机增量）
-    this.r = randBetween(4, 7) + 1.5 * Math.random();
-    // this.r = randBetween(3, 6) + 1 * Math.random(); // 备用更小半径配置
-    // 随机选取一个粒子颜色
-    this.color = colours[Math.floor(Math.random() * colours.length)];
-  }
-
-  /**
-   * 粒子更新方法：每一帧更新位置、大小、速度
-   */
-  Ball.prototype.update = function() {
-    // 更新粒子坐标
-    this.x += this.vx - normal.x;
-    this.y += this.vy - normal.y;
-    // 动态修正偏移量
-    normal.x = -2 / window.innerWidth * Math.sin(this.angle);
-    normal.y = -2 / window.innerHeight * Math.cos(this.angle);
-    // 粒子半径持续减小（逐渐消失）
-    this.r -= 0.3;
-    // 速度衰减（模拟摩擦力，越飞越慢）
-    this.vx *= 0.9;
-    this.vy *= 0.9;
+const ClickFireworks = (function () {
+  // 默认配置
+  const defaultOptions = {
+    particleNum: 30,          // 粒子数量
+    colors: [                 // 粒子颜色组
+      "rgba(255,182,185,.9)",
+      "rgba(250,227,217,.9)",
+      "rgba(187,222,214,.9)",
+      "rgba(138,198,209,.9)"
+    ],
+    circleRadiusMin: 80,      // 外圈圆环最小半径
+    circleRadiusMax: 160,     // 外圈圆环最大半径
+    particleRadiusMin: 16,    // 粒子初始最小半径
+    particleRadiusMax: 32,    // 粒子初始最大半径
+    particleMoveMin: 50,      // 粒子移动最小距离
+    particleMoveMax: 180      // 粒子移动最大距离
   };
 
-  /**
-   * 批量创建粒子，加入粒子数组
-   * @param {number} count - 粒子数量
-   * @param {number} x - 生成中心点X
-   * @param {number} y - 生成中心点Y
-   */
-  function pushBalls(count, x, y) {
-    for (var i = 0; i < count; i++) {
-      balls.push(new Ball(x, y));
-    }
+  let canvasEl, ctx;
+  let pointerX = 0;
+  let pointerY = 0;
+  let tapEvent = "click";
+  let options = {};
+
+  // 初始化画布
+  function initCanvas() {
+    canvasEl = document.createElement("canvas");
+    canvasEl.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999999;
+    `;
+    document.body.appendChild(canvasEl);
+    ctx = canvasEl.getContext("2d");
+    setCanvasSize();
+    window.addEventListener("resize", setCanvasSize, false);
   }
 
-  /**
-   * 生成 [min, max) 之间的随机整数
-   * @param {number} min - 最小值
-   * @param {number} max - 最大值
-   * @returns {number} 随机整数
-   */
-  function randBetween(min, max) {
-    return Math.floor(Math.random() * max) + min;
+  // 适配窗口大小
+  function setCanvasSize() {
+    canvasEl.width = window.innerWidth * 2;
+    canvasEl.height = window.innerHeight * 2;
+    canvasEl.style.width = window.innerWidth + "px";
+    canvasEl.style.height = window.innerHeight + "px";
+    ctx.scale(2, 2);
   }
 
-  /**
-   * 动画主循环（每一帧执行）
-   */
-  function loop() {
-    // 清空画布
-    ctx.fillStyle = 'rgba(255, 255, 255, 0)';
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // ========== 绘制白色扩散圆环波纹 ==========
-    // 倒序遍历，避免删除元素导致下标错乱
-    for (var j = rings.length - 1; j >= 0; j--) {
-      var ring = rings[j];
-      ctx.save(); // 保存绘图状态
-      // 控制圆环整体透明度
-      ctx.globalAlpha = ring.life * 0.5;
-      ctx.strokeStyle = '#fff'; // 圆环描边颜色：白色
-      ctx.lineWidth = 6; // 圆环线条宽度
-      ctx.beginPath(); // 开启新路径
-      // 绘制圆形圆环
-      ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2, false);
-      ctx.stroke(); // 执行描边
-      ctx.restore(); // 恢复绘图状态
+  // 更新点击坐标
+  function updateCoords(e) {
+    pointerX = e.clientX || (e.touches && e.touches[0].clientX);
+    pointerY = e.clientY || (e.touches && e.touches[0].clientY);
+  }
 
-      // 圆环半径持续变大
-      ring.r += 1.5;
-      // 圆环生命周期递减（逐渐透明消失）
-      ring.life -= 0.03;
-      // 生命周期为0时，移除该圆环
-      if (ring.life <= 0) rings.splice(j, 1);
-    }
-    
-    // ========== 绘制所有彩色粒子 ==========
-    for (var i = 0; i < balls.length; i++) {
-      var b = balls[i];
-      // 粒子半径小于0，跳过绘制（已消失）
-      if (b.r < 0) continue;
-      
-      // 设置粒子填充色
-      ctx.fillStyle = b.color;
+  // 设置粒子运动方向
+  function setParticuleDirection(p) {
+    const angle = anime.random(0, 360) * Math.PI / 180;
+    const value = anime.random(options.particleMoveMin, options.particleMoveMax);
+    const radius = [-1, 1][anime.random(0, 1)] * value;
+    return {
+      x: p.x + radius * Math.cos(angle),
+      y: p.y + radius * Math.sin(angle)
+    };
+  }
+
+  // 创建粒子
+  function createParticule(x, y) {
+    const p = {};
+    p.x = x;
+    p.y = y;
+    p.color = options.colors[anime.random(0, options.colors.length - 1)];
+    p.radius = anime.random(options.particleRadiusMin, options.particleRadiusMax);
+    p.endPos = setParticuleDirection(p);
+    p.draw = function () {
       ctx.beginPath();
-      // 绘制圆形粒子
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
-      ctx.fill(); // 填充圆形
-      
-      // 更新粒子状态（位置、大小、速度）
-      b.update();
-    }
-
-    // 清理超出可视区域/已消失的粒子
-    removeBall();
-    // 浏览器下一帧继续执行循环，保证动画流畅
-    requestAnimationFrame(loop);
+      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    };
+    return p;
   }
 
-  /**
-   * 清理失效粒子（超出屏幕 / 半径过小）
-   */
-  function removeBall() {
-    for (var i = 0; i < balls.length; i++) {
-      var b = balls[i];
-      // 判断粒子是否在可视区域外 或 完全缩小消失
-      if (b.x + b.r < 0 || b.x - b.r > width ||
-          b.y + b.r < 0 || b.y - b.r > height ||
-          b.r < 0) {
-        balls.splice(i, 1); // 从数组中移除该粒子
+  // 创建中心圆环
+  function createCircle(x, y) {
+    const p = {};
+    p.x = x;
+    p.y = y;
+    p.color = "#FFF";
+    p.radius = 0.1;
+    p.alpha = 0.5;
+    p.lineWidth = 6;
+    p.draw = function () {
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true);
+      ctx.lineWidth = p.lineWidth;
+      ctx.strokeStyle = p.color;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    };
+    return p;
+  }
+
+  // 渲染所有粒子/圆环
+  function renderParticule(anim) {
+    for (let i = 0; i < anim.animatables.length; i++) {
+      anim.animatables[i].target.draw();
+    }
+  }
+
+  // 执行粒子动画
+  function animateParticules(x, y) {
+    const circle = createCircle(x, y);
+    const particules = [];
+    for (let i = 0; i < options.particleNum; i++) {
+      particules.push(createParticule(x, y));
+    }
+
+    // 动画时间线
+    anime.timeline()
+      .add({
+        targets: particules,
+        x: p => p.endPos.x,
+        y: p => p.endPos.y,
+        radius: 0.1,
+        duration: anime.random(1200, 1800),
+        easing: "easeOutExpo",
+        update: renderParticule
+      })
+      .add({
+        targets: circle,
+        radius: anime.random(options.circleRadiusMin, options.circleRadiusMax),
+        lineWidth: 0,
+        alpha: {
+          value: 0,
+          easing: "linear",
+          duration: anime.random(600, 800)
+        },
+        duration: anime.random(1200, 1800),
+        easing: "easeOutExpo",
+        update: renderParticule
+      }, 0);
+  }
+
+  // 点击触发
+  function bindEvent() {
+    const render = anime({
+      duration: Infinity,
+      update: function () {
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
       }
-    }
+    });
+
+    document.addEventListener(tapEvent, function (e) {
+      render.play();
+      updateCoords(e);
+      animateParticules(pointerX, pointerY);
+    }, false);
   }
 
-  // 根据页面加载状态，启动特效
-  if (document.readyState === 'loading') {
-    // 页面还在加载，等待DOM加载完成后执行
-    document.addEventListener('DOMContentLoaded', clickEffect);
-  } else {
-    // 页面已加载完毕，直接执行初始化
-    clickEffect();
+  // 对外初始化入口
+  function init(customOpts = {}) {
+    // 合并配置
+    options = Object.assign({}, defaultOptions, customOpts);
+    initCanvas();
+    bindEvent();
   }
+
+  // 对外暴露方法
+  return {
+    init: init,
+    // 手动触发烟花（可选）
+    fire: function (x, y) {
+      animateParticules(x, y);
+    }
+  };
 })();
+
+// ========== 启动特效 ==========
+// 直接使用默认配置启动
+ClickFireworks.init();
+
