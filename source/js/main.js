@@ -264,3 +264,56 @@ const ClickFireworks = (function () {
 // 直接使用默认配置启动
 ClickFireworks.init();
 
+// ========== 加载动画 ==========
+// 加载动画配置
+const Loader = {
+  timer: null,
+  lock: false,
+
+  // 显示加载动画
+  show: function() {
+    clearTimeout(this.timer);
+    document.body.removeClass('loaded');
+    loadCat.attr('style', 'display:block');
+    Loader.lock = false;
+  },
+
+  // 延迟隐藏加载动画
+  hide: function(sec) {
+    if(!CONFIG.loader.start)
+      sec = -1
+    this.timer = setTimeout(this.vanish, sec||3000);
+  },
+
+  // 真正隐藏：执行淡出动画
+  vanish: function() {
+    if(Loader.lock) return;
+    if(CONFIG.loader.start)
+      transition(loadCat, 0)       // 淡出动画
+    document.body.addClass('loaded');
+    Loader.lock = true;
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const loader = document.getElementById('loader');
+
+  // 判断是否第一次访问
+  const isFirstVisit = !localStorage.getItem('visited');
+
+  if (isFirstVisit) {
+    // 第一次：显示加载动画
+    loader.style.display = 'flex';
+
+    // 页面加载完成后隐藏
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        // 标记：已经访问过了
+        localStorage.setItem('visited', 'true');
+      }, 3000);
+    });
+  } else {
+    // 不是第一次：直接隐藏
+    loader.style.display = 'none';
+  }
+});
