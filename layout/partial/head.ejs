@@ -29,8 +29,4 @@
   <link rel="alternate" href="<%- url_for('/atom.xml') %>" title="<%= config.title %>" type="application/atom+xml">
   <%- css('css/style') %>
 
-  <% if (config.syntax_highlighter === 'highlight.js') { %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" id="hljs-light">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" id="hljs-dark" disabled>
-  <% } %>
 </head>
