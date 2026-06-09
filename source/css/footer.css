@@ -1,18 +1,82 @@
-.with-love {
+/* .with-love {
   color: rgb(255, 192, 203);
   display: inline-block;
   margin: 0px 0.3125rem 0px 0.125rem;
 }
 .rotate{
   animation: rotate 6s linear infinite;
-}
+} */
 
 /* ========== 旋转动画的定义（必须有！） ========== */
-@keyframes rotate {
+/* @keyframes rotate {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
+}
+.shyxnok {
+     display: inline-block;
+} */
+/* 页脚整体样式 */
+.site-footer {
+  width: 100%;
+  padding: 40px 20px;
+  background-color: #f8f9fa; /* 浅灰背景，清爽干净 */
+  border-top: 1px solid #eee;
+  margin-top: 60px;
+}
+
+/* 页脚内容居中 */
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* 版权文字样式 */
+.copyright {
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+/* 爱心图标旋转动画（保留你原来的效果） */
+.shyxnok.i-yinghua.rotate {
+  display: inline-block;
+  color: #ff7d94; /* 樱花粉色 */
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 链接样式 */
+.footer-inner a {
+  color: #444;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.footer-inner a:hover {
+  color: #ff7d94;
+  border-color: #ff7d94;
+}
+
+/* 网站运行时间高亮 */
+.time {
+  margin: 10px 0 0 0;
+  color: #888;
+}
+
+#time {
+  color: #ff7d94;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }

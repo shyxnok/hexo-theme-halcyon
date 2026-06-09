@@ -2,10 +2,8 @@
 <html lang="<%= config.language %>">
 <%- partial('partial/head') %>
 <body>
+  <%- partial('partial/load') %>
   <%- partial('partial/header') %>
-  <div id="loader">
-    <div class="loader-spinner"><span></span></div>
-  </div>
   <main class="main-container">
     <div class="content-wrapper">
       <%- body %>
