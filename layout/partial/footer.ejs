@@ -1,12 +1,22 @@
 <footer class="site-footer">
+  
   <div class="footer-inner">
     <p class="copyright">
-      &copy; <%= new Date().getFullYear() %> <%= config.author %>
+        &copy 2018 – <%= new Date().getFullYear() %> 
+        <span class="with-love">
+          <i class="shyxnok icon-yinghua rotate"></i>
+        </span>
+       
+    <%= config.author %>
     </p>
-    <p class="powered">
+
+    <p class="copyright">
       Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
       &nbsp;|&nbsp;
-      Theme <a href="#" target="_blank" rel="noopener">Halcyon</a>
+      Theme.<a href="https://github.com/shyxnok/hexo-theme-Halcyon" target="_blank" rel="noopener">Halcyon</a>
+    </p>
+    <p class="time">
+      该网站以运行<span id="time"></span>
     </p>
   </div>
 </footer>

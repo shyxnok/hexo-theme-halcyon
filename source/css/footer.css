@@ -1,0 +1,18 @@
+.with-love {
+  color: rgb(255, 192, 203);
+  display: inline-block;
+  margin: 0px 0.3125rem 0px 0.125rem;
+}
+.rotate{
+  animation: rotate 6s linear infinite;
+}
+
+/* ========== 旋转动画的定义（必须有！） ========== */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

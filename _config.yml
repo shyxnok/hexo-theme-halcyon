@@ -6,8 +6,9 @@
 favicon: /images/favicon.png
 
 # Site brand text shown in header (fallback to site title)
-site_brand: Halcyon
-
+site_brand: SkyのXnok
+# Site build time (for running time calculation)
+buildtime: 2026-06-01
 # Navigation menu
 menu:
   Home: /

@@ -7,6 +7,23 @@
    1. CSS Custom Properties
    -------------------------------------------------------- */
 :root {
+  --grey-0: #fff;
+  --grey-1: #fdfdfd;
+  --grey-2: #f7f7f7;
+  --grey-3: #eff2f3;
+  --grey-4: #ccc;
+  --grey-5: #999;
+  --grey-6: #666;
+  --grey-7: #333;
+  --grey-8: #222;
+  --grey-9: #000;
+  --grey-1-a0: #fdfdfd00;
+  --grey-1-a7: #fdfdfdb3;
+  --grey-1-a5: #fdfdfd80;
+  --grey-1-a3: #fdfdfd4d;
+  --grey-9-a1: #0000001a;
+  --grey-9-a5: #00000080;
+  --grey-2-a0: #f7f7f700;
   --color-bg: #faf8f5;
   --color-bg-secondary: #f3efe8;
   --color-text: #3d322c;
@@ -19,9 +36,7 @@
   --color-card-shadow: rgba(61, 50, 44, 0.05);
   --color-code-bg: #f3efe8;
   --color-code-text: #3d322c;
-  --grey-3: #eff2f3;
   --color-pink-light: #ffe6fa;
-  --grey-1-a5: rgba(253,253,253,0.5);
   --color-tag-bg: #f2e4da;
   --color-tag-text: #c97d60;
   --color-header-bg: rgba(250, 248, 245, 0.92);
@@ -52,6 +67,22 @@
    2. Dark Mode — warm dark, not cold blue-black
    -------------------------------------------------------- */
 [data-theme="dark"] {
+  --grey-0: #222;
+  --grey-1: #21252b;
+  --grey-2: #363636;
+  --grey-3: #444;
+  --grey-4: #666;
+  --grey-5: #aaa;
+  --grey-6: #ccc;
+  --grey-7: #ddd;
+  --grey-8: #eee;
+  --grey-9: #f7f7f7;
+  --grey-1-a7: rgba(34,34,34,0.7);
+  --grey-1-a5: rgba(34,34,34,0.5);
+  --grey-1-a3: rgba(34,34,34,0.3);
+  --grey-1-a0: rgba(34,34,34,0);
+  --grey-9-a1: rgba(51,51,51,0.1);
+  --grey-2-a0: rgba(54,54,54,0);
   --color-bg: #1e1b1a;
   --color-bg-secondary: #252220;
   --color-text: #e8e0d8;
@@ -481,7 +512,7 @@ img { max-width: 100%; height: auto; }
   transition: background var(--transition), border-color var(--transition);
 }
 .footer-inner { max-width: var(--max-width); margin: 0 auto; }
-.copyright { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: 0.25rem; }
+.copyright .time { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: 0.25rem; }
 .powered { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
 .powered a { color: var(--color-accent); }
 
@@ -628,3 +659,57 @@ img { max-width: 100%; height: auto; }
   0%,100%{transform:scaleY(0.4);}
   50%{transform:scaleY(1);}
 }
+
+
+/* 波浪动画 */
+.waves {
+  content-visibility: auto;
+  width: 100%;
+  height: 15vh;
+  min-height: 3.125rem;
+  max-height: 9.375rem;
+  margin-bottom: -0.6875rem;
+  position: relative;
+
+}
+.parallax > use {
+  animation: 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite wave;
+}
+
+use.stop-animation {
+  animation-play-state: paused;
+}
+
+.parallax > use:first-child {
+  fill: var(--grey-1-a7);
+  animation-duration: 7s;
+  animation-delay: -2s;
+}
+
+.parallax > use:nth-child(2) {
+  fill: var(--grey-1-a5);
+  animation-duration: 10s;
+  animation-delay: -3s;
+}
+
+.parallax > use:nth-child(3) {
+  fill: var(--grey-1-a3);
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+.parallax > use:nth-child(4) {
+  fill: var(--grey-1);
+  animation-duration: 20s;
+  animation-delay: -5s;
+}
+@keyframes wave {
+  0% {
+    transform: translate(-90px);
+  }
+  to {
+    transform: translate(85px);
+  }
+}
+
+
