@@ -61,3 +61,25 @@ colors:
 # Code syntax highlighting theme
 highlight:
   theme: default
+# Sakura configuration
+sakura:
+  enable: true
+  switchable: true
+  sakuraNum: 15
+  limitTimes: -1
+  size:
+    min: 1
+    max: 2
+  opacity:
+    min: 0.1
+    max: 0.9
+  speed:
+    horizontal:
+      min: -1.7
+      max: -1.2
+    vertical:
+      min: 1.5
+      max: 2.2
+    rotation: 0.01
+    fadeSpeed: 0.01
+  zIndex: 100
