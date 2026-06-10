@@ -1,22 +1,79 @@
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-card author-card">
-    <div class="author-avatar">
-      <img src="<%- url_for(theme.favicon || '/images/favicon.png') %>" alt="<%= config.author %>">
-    </div>
-    <h3 class="author-name"><%= config.author %></h3>
-    <p class="author-bio"><%= config.description || '' %></p>
-    <% if (theme.social && Object.keys(theme.social).length) { %>
-      <div class="social-links">
-        <% for (var name in theme.social) { %>
-          <a href="<%= theme.social[name] %>" class="social-link" target="_blank" rel="noopener" title="<%= name %>"><%= name %></a>
-        <% } %>
-      </div>
-    <% } %>
-  </div>
+<aside id="sidebar">
+  <div class="inner">
+    <div class="panels">
+      <div class="inner">
+        <div class="contents panel pjax" data-title="<%= __('contents') %>"></div>
+        <div class="related panel pjax" data-title="<%= __('related_posts') %>"></div>
+        <div class="overview panel" data-title="<%= __('overview') %>">
+          <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <img class="image" itemprop="image" alt="<%= config.author %>"
+                data-src="<%- url_for(theme.avatar || '/images/avatar.jpg') %>">
+            <p class="name" itemprop="name"><%= config.author %></p>
+            <div class="description" itemprop="description"><%= config.description || '' %></div>
+          </div>
 
-  <% if (theme.widgets && theme.widgets.length) { %>
-    <% theme.widgets.forEach(function(widget) { %>
-      <%- partial('widget/' + widget) %>
-    <% }) %>
-  <% } %>
+          <nav class="state">
+            <div class="item posts">
+              <a href="<%- url_for('/archives') %>">
+                <span class="count"><%= site.posts.length %></span>
+                <span class="name"><%= __('posts') %></span>
+              </a>
+            </div>
+            <div class="item categories">
+              <a href="<%- url_for('/categories') %>">
+                <span class="count"><%= site.categories.length %></span>
+                <span class="name"><%= __('categories') %></span>
+              </a>
+            </div>
+            <div class="item tags">
+              <a href="<%- url_for('/tags') %>">
+                <span class="count"><%= site.tags.length %></span>
+                <span class="name"><%= __('tags') %></span>
+              </a>
+            </div>
+          </nav>
+
+          <div class="social">
+            <% if (theme.social) { %>
+              <% for (var name in theme.social) { %>
+                <a class="item" href="<%= theme.social[name] %>" target="_blank" rel="noopener" title="<%= name %>">
+                  <i class="ic i-<%= name.toLowerCase() %>"></i>
+                </a>
+              <% } %>
+            <% } %>
+          </div>
+
+          <ul class="menu">
+            <% for (var name in theme.menu) { %>
+              <% var value = theme.menu[name]; %>
+              <% if (typeof value === 'object' && value !== null) { %>
+                <li class="item dropdown">
+                  <a href="javascript:void(0);"><i class="ic i-<%= name %>"></i><%= name %></a>
+                  <ul class="submenu">
+                    <% for (var sub in value) { %>
+                      <li class="item">
+                        <a href="<%- url_for(value[sub]) %>" rel="section"><i class="ic i-<%= sub %>"></i><%= sub %></a>
+                      </li>
+                    <% } %>
+                  </ul>
+                </li>
+              <% } else { %>
+                <li class="item">
+                  <a href="<%- url_for(value) %>" rel="section"><i class="ic i-<%= name %>"></i><%= name %></a>
+                </li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <ul id="quick">
+      <li class="prev pjax"></li>
+      <li class="up"><i class="ic i-arrow-up"></i></li>
+      <li class="down"><i class="ic i-arrow-down"></i></li>
+      <li class="next pjax"></li>
+      <li class="percent"></li>
+    </ul>
+  </div>
 </aside>

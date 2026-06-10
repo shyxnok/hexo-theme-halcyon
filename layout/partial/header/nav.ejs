@@ -1,0 +1,41 @@
+<nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start" data-pjax-state="load"><%= config.author %></a></li>
+      <% for (var name in theme.menu) { %>
+        <% var value = theme.menu[name]; %>
+        <% if (typeof value === 'object' && value !== null) { %>
+          <li class="item dropdown">
+            <a class="nav-link"><%= name %></a>
+            <ul class="submenu">
+              <% for (var sub in value) { %>
+                <li class="item">
+                  <a href="<%- url_for(value[sub]) %>"><%= sub %></a>
+                </li>
+              <% } %>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="item">
+            <a href="<%- url_for(value) %>"><%= name %></a>
+          </li>
+        <% } %>
+      <% } %>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="shyxnok i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="shyxnok i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>

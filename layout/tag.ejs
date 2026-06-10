@@ -1,18 +1,15 @@
-<div class="tag-page">
-  <h2 class="page-heading"><%= __('tag') %>: <%= page.tag %></h2>
-
+<div class="tag wrap">
+  <h2 class="divider"><%= __('tag') %>: <%= page.tag %></h2>
   <% if (page.posts.length) { %>
-    <ul class="post-list-simple">
+    <div class="segments">
       <% page.posts.each(function(post) { %>
-        <li>
-          <time datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>">
-            <%= date(post.date, 'YYYY-MM-DD') %>
-          </time>
+        <div class="item">
+          <time datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
           <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-        </li>
-      <% }) %>
-    </ul>
+        </div>
+      <% }); %>
+    </div>
   <% } else { %>
-    <p class="empty-message"><%= __('no_posts') %></p>
+    <p class="empty"><%= __('no_posts') %></p>
   <% } %>
 </div>

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="<%= config.language %>">
 <%- partial('partial/head') %>
-<body>
+<body itemscope itemtype="http://schema.org/WebPage">
   <%- partial('partial/load') %>
-  <%- partial('partial/header') %>
-  <main class="main-container">
-    <div class="content-wrapper">
-      <%- body %>
-    </div>
-    <%- partial('partial/sidebar') %>
-  </main>
-  <%- partial('partial/footer') %>
+  <div id="container">
+    <%- partial('partial/header') %>
+    <%- partial('partial/wave') %>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          <%- body %>
+        </div>
+        <%- partial('partial/sidebar') %>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <%- partial('partial/footer') %>
+  </div>
   <%- partial('partial/scripts') %>
 </body>
 </html>

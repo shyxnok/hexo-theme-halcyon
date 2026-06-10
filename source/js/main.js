@@ -3,16 +3,16 @@ console.log("%c Theme.Halcyon v" + '1.0.0' + " %c https://github.com/shyxnok/hex
 
 /**
  * Halcyon Theme — main.js
- * Dark mode toggle, mobile menu, active nav
+ * Based on Shoka design: nav scroll, dropdowns, background images, theme toggle
  */
 
 (function () {
   'use strict';
 
   var THEME_KEY = 'halcyon-theme';
-  var themeToggle = document.getElementById('theme-toggle');
   var html = document.documentElement;
 
+  // ===== Theme =====
   function getPreferredTheme() {
     var saved = localStorage.getItem(THEME_KEY);
     if (saved === 'dark' || saved === 'light') return saved;
@@ -34,69 +34,183 @@ console.log("%c Theme.Halcyon v" + '1.0.0' + " %c https://github.com/shyxnok/hex
   var currentTheme = getPreferredTheme();
   applyTheme(currentTheme);
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      currentTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      applyTheme(currentTheme);
-    });
-  }
-
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
     if (!localStorage.getItem(THEME_KEY)) {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });
 
-  var navToggle = document.getElementById('nav-toggle');
-  var siteNav = document.getElementById('site-nav');
-  if (navToggle && siteNav) {
-    navToggle.addEventListener('click', function () {
-      var isOpen = siteNav.classList.toggle('open');
-      navToggle.classList.toggle('open', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen);
+  // Theme toggle via .right .item.theme
+  var themeBtn = document.querySelector('#nav .right .item.theme');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      currentTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(currentTheme);
+
+      // Toggle icon class
+      var icon = this.querySelector('.ic');
+      if (icon) {
+        if (currentTheme === 'dark') {
+          icon.classList.remove('i-sun');
+          icon.classList.add('i-moon');
+        } else {
+          icon.classList.remove('i-moon');
+          icon.classList.add('i-sun');
+        }
+      }
     });
-    siteNav.querySelectorAll('.nav-link').forEach(function (link) {
+  }
+
+  // ===== Navigation =====
+  var nav = document.getElementById('nav');
+  var toggleBtn = document.querySelector('#nav .toggle');
+  var menu = document.querySelector('#nav .menu');
+
+  // ---- Scroll: show/hide nav with background ----
+  var lastScroll = 0;
+  var scrollThreshold = 10;
+
+  window.addEventListener('scroll', function () {
+    var scrollY = window.scrollY || window.pageYOffset;
+
+    // Add background when scrolled past header
+    if (nav) {
+      nav.classList.toggle('show', scrollY > 50);
+    }
+
+    // Hide on scroll down, show on scroll up
+    if (Math.abs(scrollY - lastScroll) > scrollThreshold && scrollY > 200) {
+      if (nav) {
+        nav.classList.toggle('down', scrollY > lastScroll);
+        nav.classList.toggle('up', scrollY < lastScroll);
+      }
+    }
+    lastScroll = scrollY;
+  }, { passive: true });
+
+  // ---- Mobile hamburger toggle ----
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener('click', function () {
+      var isOpen = toggleBtn.classList.toggle('open');
+      nav.classList.toggle('mobile-open', isOpen);
+      toggleBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile menu on link click
+    menu.querySelectorAll('.item:not(.dropdown) > a[href]').forEach(function (link) {
       link.addEventListener('click', function () {
-        siteNav.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+        toggleBtn.classList.remove('open');
+        if (nav) nav.classList.remove('mobile-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
+  // ---- Dropdown toggle (click) ----
+  document.querySelectorAll('#nav .menu .item.dropdown > a').forEach(function (toggle) {
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      var parent = this.parentElement;
+
+      // Close other dropdowns
+      document.querySelectorAll('#nav .menu .item.dropdown.open').forEach(function (dd) {
+        if (dd !== parent) dd.classList.remove('open');
+      });
+
+      parent.classList.toggle('open');
+    });
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('#nav .menu .item.dropdown')) {
+      document.querySelectorAll('#nav .menu .item.dropdown.open').forEach(function (dd) {
+        dd.classList.remove('open');
+      });
+    }
+  });
+
+  // ---- Active nav detection ----
   var currentPath = window.location.pathname;
-  document.querySelectorAll('.nav-link').forEach(function (link) {
+  document.querySelectorAll('#nav .menu .item a[href]').forEach(function (link) {
     var href = link.getAttribute('href');
-    if (href === '/' && currentPath === '/') {
-      link.classList.add('active');
-    } else if (href !== '/' && currentPath.startsWith(href)) {
-      link.classList.add('active');
+    if (!href) return;
+
+    var isActive = (href === '/' && currentPath === '/') ||
+                   (href !== '/' && currentPath.startsWith(href));
+
+    if (isActive) {
+      link.closest('.item').classList.add('active');
+      // If in a dropdown, also mark parent
+      var parentDropdown = link.closest('.dropdown');
+      if (parentDropdown) parentDropdown.classList.add('active');
+    }
+  });
+
+})();
+
+// ===== Background Images =====
+(function () {
+  'use strict';
+
+  var imgs = document.getElementById('imgs');
+  if (!imgs) return;
+
+  var items = imgs.querySelectorAll('.item[data-background-image]');
+  items.forEach(function (item) {
+    var url = item.getAttribute('data-background-image');
+    if (url) {
+      item.style.backgroundImage = 'url(' + url + ')';
     }
   });
 })();
 
+// ===== PJAX animation (brand fade-in) =====
+document.addEventListener('DOMContentLoaded', function () {
+  document.body.classList.add('loaded');
+});
 
+// ========== 加载动画 ==========
+document.addEventListener('DOMContentLoaded', function () {
+  var loader = document.getElementById('loading');
+
+  if (!loader) return;
+
+  var isFirstVisit = !localStorage.getItem('visited');
+
+  if (isFirstVisit) {
+    loader.style.display = 'flex';
+
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        loader.classList.add('hidden');
+        localStorage.setItem('visited', 'true');
+      }, 3000);
+    });
+  } else {
+    loader.style.display = 'none';
+  }
+});
 
 /**
  * 点击烟花粒子特效 - 独立抽离版
  * 依赖: anime.js
  */
 const ClickFireworks = (function () {
-  // 默认配置
   const defaultOptions = {
-    particleNum: 30,          // 粒子数量
-    colors: [                 // 粒子颜色组
+    particleNum: 30,
+    colors: [
       "rgba(255,182,185,.9)",
       "rgba(250,227,217,.9)",
       "rgba(187,222,214,.9)",
       "rgba(138,198,209,.9)"
     ],
-    circleRadiusMin: 80,      // 外圈圆环最小半径
-    circleRadiusMax: 160,     // 外圈圆环最大半径
-    particleRadiusMin: 16,    // 粒子初始最小半径
-    particleRadiusMax: 32,    // 粒子初始最大半径
-    particleMoveMin: 50,      // 粒子移动最小距离
-    particleMoveMax: 180      // 粒子移动最大距离
+    circleRadiusMin: 80,
+    circleRadiusMax: 160,
+    particleRadiusMin: 16,
+    particleRadiusMax: 32,
+    particleMoveMin: 50,
+    particleMoveMax: 180
   };
 
   let canvasEl, ctx;
@@ -105,7 +219,6 @@ const ClickFireworks = (function () {
   let tapEvent = "click";
   let options = {};
 
-  // 初始化画布
   function initCanvas() {
     canvasEl = document.createElement("canvas");
     canvasEl.style.cssText = `
@@ -121,7 +234,6 @@ const ClickFireworks = (function () {
     window.addEventListener("resize", setCanvasSize, false);
   }
 
-  // 适配窗口大小
   function setCanvasSize() {
     canvasEl.width = window.innerWidth * 2;
     canvasEl.height = window.innerHeight * 2;
@@ -130,13 +242,11 @@ const ClickFireworks = (function () {
     ctx.scale(2, 2);
   }
 
-  // 更新点击坐标
   function updateCoords(e) {
     pointerX = e.clientX || (e.touches && e.touches[0].clientX);
     pointerY = e.clientY || (e.touches && e.touches[0].clientY);
   }
 
-  // 设置粒子运动方向
   function setParticuleDirection(p) {
     const angle = anime.random(0, 360) * Math.PI / 180;
     const value = anime.random(options.particleMoveMin, options.particleMoveMax);
@@ -147,7 +257,6 @@ const ClickFireworks = (function () {
     };
   }
 
-  // 创建粒子
   function createParticule(x, y) {
     const p = {};
     p.x = x;
@@ -164,7 +273,6 @@ const ClickFireworks = (function () {
     return p;
   }
 
-  // 创建中心圆环
   function createCircle(x, y) {
     const p = {};
     p.x = x;
@@ -185,14 +293,12 @@ const ClickFireworks = (function () {
     return p;
   }
 
-  // 渲染所有粒子/圆环
   function renderParticule(anim) {
     for (let i = 0; i < anim.animatables.length; i++) {
       anim.animatables[i].target.draw();
     }
   }
 
-  // 执行粒子动画
   function animateParticules(x, y) {
     const circle = createCircle(x, y);
     const particules = [];
@@ -200,7 +306,6 @@ const ClickFireworks = (function () {
       particules.push(createParticule(x, y));
     }
 
-    // 动画时间线
     anime.timeline()
       .add({
         targets: particules,
@@ -226,7 +331,6 @@ const ClickFireworks = (function () {
       }, 0);
   }
 
-  // 点击触发
   function bindEvent() {
     const render = anime({
       duration: Infinity,
@@ -242,18 +346,14 @@ const ClickFireworks = (function () {
     }, false);
   }
 
-  // 对外初始化入口
-  function init(customOpts = {}) {
-    // 合并配置
-    options = Object.assign({}, defaultOptions, customOpts);
+  function init(customOpts) {
+    options = Object.assign({}, defaultOptions, customOpts || {});
     initCanvas();
     bindEvent();
   }
 
-  // 对外暴露方法
   return {
     init: init,
-    // 手动触发烟花（可选）
     fire: function (x, y) {
       animateParticules(x, y);
     }
@@ -261,61 +361,4 @@ const ClickFireworks = (function () {
 })();
 
 // ========== 启动特效 ==========
-// 直接使用默认配置启动
 ClickFireworks.init();
-
-// ========== 加载动画 ==========
-// 加载动画配置
-const Loader = {
-  timer: null,
-  lock: false,
-
-  // 显示加载动画
-  show: function() {
-    clearTimeout(this.timer);
-    document.body.removeClass('loaded');
-    loadCat.attr('style', 'display:block');
-    Loader.lock = false;
-  },
-
-  // 延迟隐藏加载动画
-  hide: function(sec) {
-    if(!CONFIG.loader.start)
-      sec = -1
-    this.timer = setTimeout(this.vanish, sec||3000);
-  },
-
-  // 真正隐藏：执行淡出动画
-  vanish: function() {
-    if(Loader.lock) return;
-    if(CONFIG.loader.start)
-      transition(loadCat, 0)       // 淡出动画
-    document.body.addClass('loaded');
-    Loader.lock = true;
-  }
-}
-document.addEventListener('DOMContentLoaded', () => {
-  const loader = document.getElementById('loader');
-
-  // 判断是否第一次访问
-  const isFirstVisit = !localStorage.getItem('visited');
-
-  if (isFirstVisit) {
-    // 第一次：显示加载动画
-    loader.style.display = 'flex';
-
-    // 页面加载完成后隐藏
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        // 标记：已经访问过了
-        localStorage.setItem('visited', 'true');
-      }, 3000);
-    });
-  } else {
-    // 不是第一次：直接隐藏
-    loader.style.display = 'none';
-  }
-});
-
-

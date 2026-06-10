@@ -7,15 +7,29 @@ favicon: /images/favicon.png
 
 # Site brand text shown in header (fallback to site title)
 site_brand: SkyのXnok
+# Site subtitle shown in header (fallback to site title)
+subtitle: 成为更好的自己
 # Site build time (for running time calculation)
 buildtime: 2026-06-01
 # Navigation menu
 menu:
-  Home: /
-  Archives: /archives
-  Categories: /categories
-  Tags: /tags
-  About: /about
+  home: /
+  about: /about
+  posts:
+    archives: /archives
+    categories: /categories
+    tags: /tags
+  friends: /friends
+  links: /links
+
+# Header background images (Ken Burns crossfade slideshow)
+header_images:
+  - https://tva1.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg
+  - https://tva1.sinaimg.cn/large/6833939bly1giclfb3vzhj20zk0m8wny.jpg
+  - https://tva1.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg
+  - https://tva1.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg
+  - https://tva1.sinaimg.cn/large/6833939bly1giclxfdlttj20zk0m8npd.jpg
+  - https://tva1.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg
 
 # Social links (shown in sidebar)
 social:

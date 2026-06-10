@@ -1,10 +1,10 @@
-<div class="categories-page">
-  <h2 class="page-heading"><%= __('categories') %></h2>
+<div class="categories wrap">
+  <h2 class="divider"><%= __('categories') %></h2>
   <% if (site.categories.length) { %>
     <div class="category-list">
       <%- list_categories({show_count: true, depth: 0}) %>
     </div>
   <% } else { %>
-    <p class="empty-message"><%= __('no_categories') %></p>
+    <p class="empty"><%= __('no_categories') %></p>
   <% } %>
 </div>

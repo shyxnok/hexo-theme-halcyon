@@ -1,10 +1,10 @@
-<div class="tags-page">
-  <h2 class="page-heading"><%= __('tags') %></h2>
+<div class="tags wrap">
+  <h2 class="divider"><%= __('tags') %></h2>
   <% if (site.tags.length) { %>
     <div class="tag-cloud">
-      <%- tagcloud({min_font: 14, max_font: 32, unit: 'px'}) %>
+      <%- tagcloud({min_font: 14, max_font: 28, unit: 'px'}) %>
     </div>
   <% } else { %>
-    <p class="empty-message"><%= __('no_tags') %></p>
+    <p class="empty"><%= __('no_tags') %></p>
   <% } %>
 </div>

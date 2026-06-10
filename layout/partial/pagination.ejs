@@ -1,15 +1,15 @@
 <% if (page.total > 1) { %>
 <nav class="pagination">
   <% if (page.prev) { %>
-    <a href="<%- url_for(page.prev_link) %>" class="page-btn prev">&larr; <%= __('prev') %></a>
+    <a href="<%- url_for(page.prev_link) %>" class="prev"><%= __('prev') %></a>
   <% } else { %>
-    <span class="page-btn prev disabled">&larr; <%= __('prev') %></span>
+    <span class="prev disabled"><%= __('prev') %></span>
   <% } %>
-  <span class="page-info"><%= __('page', page.current) %> / <%= page.total %></span>
+  <span class="info"><%= page.current %> / <%= page.total %></span>
   <% if (page.next) { %>
-    <a href="<%- url_for(page.next_link) %>" class="page-btn next"><%= __('next') %> &rarr;</a>
+    <a href="<%- url_for(page.next_link) %>" class="next"><%= __('next') %></a>
   <% } else { %>
-    <span class="page-btn next disabled"><%= __('next') %> &rarr;</span>
+    <span class="next disabled"><%= __('next') %></span>
   <% } %>
 </nav>
 <% } %>

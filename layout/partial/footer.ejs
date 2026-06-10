@@ -1,22 +1,39 @@
-<footer class="site-footer">
-  
-  <div class="footer-inner">
-    <p class="copyright">
-        &copy 2018 – <%= new Date().getFullYear() %> 
+<footer id="footer">
+  <div class="inner">
+    <div class="widgets">
+      <div class="rpost pjax">
+        <h2><%= __('random_posts') %></h2>
+        <ul>
+          <% var posts = site.posts.sort('random').limit(4); %>
+          <% posts.each(function(post) { %>
+            <li class="item">
+              <div class="breadcrumb">
+                <% if (post.categories && post.categories.length) { %>
+                  <a href="<%- url_for(post.categories.first().path) %>" title="<%= post.categories.first().name %>"><%= post.categories.first().name %></a>
+                <% } %>
+              </div>
+              <span><a href="<%- url_for(post.path) %>" title="<%= post.title %>"><%= post.title %></a></span>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+    <div class="status">
+      <div class="copyright">
+        &copy; <%= date(Date.now(), 'YYYY') %>
         <span class="with-love">
           <i class="shyxnok i-yinghua rotate"></i>
         </span>
-       
-    <%= config.author %>
-    </p>
-
-    <p class="copyright">
-      Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
-      &nbsp;|&nbsp;
-      Theme.<a href="https://github.com/shyxnok/hexo-theme-Halcyon" target="_blank" rel="noopener">Halcyon</a>
-    </p>
-    <p class="time">
-      该网站已运行<span id="time"></span>
-    </p>
+        <span class="author" itemprop="copyrightHolder"><%= config.author %></span>
+      </div>
+      <div class="powered-by">
+        Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+        &nbsp;|&nbsp;
+        Theme.<a href="https://github.com/shyxnok/hexo-theme-Halcyon" target="_blank" rel="noopener">Halcyon</a>
+      </div>
+      <p class="time">
+        <span id="time"></span>
+      </p>
+    </div>
   </div>
 </footer>

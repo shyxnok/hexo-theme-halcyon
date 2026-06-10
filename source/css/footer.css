@@ -1,82 +1,67 @@
-/* .with-love {
-  color: rgb(255, 192, 203);
-  display: inline-block;
-  margin: 0px 0.3125rem 0px 0.125rem;
-}
-.rotate{
-  animation: rotate 6s linear infinite;
-} */
+/* ============================================================
+   Footer
+   Based on Shoka design
+   ============================================================ */
 
-/* ========== 旋转动画的定义（必须有！） ========== */
-/* @keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.shyxnok {
-     display: inline-block;
-} */
-/* 页脚整体样式 */
-.site-footer {
-  width: 100%;
-  padding: 40px 20px;
-  background-color: #f8f9fa; /* 浅灰背景，清爽干净 */
-  border-top: 1px solid #eee;
-  margin-top: 60px;
+#footer {
+  position: relative; z-index: 1;
+  padding: 2rem 1.5rem;
+  background: var(--grey-1);
+  border-top: 1px solid var(--grey-3);
+  transition: background-color var(--transition-duration) var(--transition-ease);
 }
 
-/* 页脚内容居中 */
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  color: #666;
-  font-size: 14px;
-  line-height: 1.8;
+#footer .inner {
+  max-width: 75rem; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1rem;
 }
 
-/* 版权文字样式 */
-.copyright {
-  margin: 0 0 8px 0;
-  letter-spacing: 0.5px;
+/* Widgets (random posts) */
+#footer .widgets {
+  display: flex; gap: 2rem;
 }
 
-/* 爱心图标旋转动画（保留你原来的效果） */
+#footer .widgets h2 {
+  font-size: 0.875rem; font-weight: 600; color: var(--grey-5);
+  margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+#footer .widgets ul { list-style: none; }
+
+#footer .widgets .item {
+  display: flex; align-items: baseline; gap: 0.75rem;
+  padding: 0.3rem 0; font-size: 0.875rem;
+}
+
+#footer .widgets .breadcrumb a {
+  color: var(--grey-5); font-size: 0.75rem; text-decoration: none;
+}
+#footer .widgets .breadcrumb a:hover { color: var(--color-pink); }
+
+#footer .widgets .item span a { color: var(--primary-color); text-decoration: none; }
+#footer .widgets .item span a:hover { color: var(--color-pink); }
+
+/* Status */
+#footer .status {
+  text-align: center; padding-top: 1rem;
+  border-top: 1px solid var(--grey-3);
+  font-size: 0.8125rem; color: var(--grey-5);
+}
+
+#footer .status .with-love { margin: 0 0.25rem; color: var(--color-pink); }
+
+#footer .status a { color: var(--color-pink); text-decoration: none; }
+#footer .status a:hover { text-decoration: underline; }
+
+#footer .status .time { margin-top: 0.5rem; font-size: 0.75rem; }
+
+/* Sakura rotate */
 .shyxnok.i-yinghua.rotate {
-  display: inline-block;
-  color: #ff7d94; /* 樱花粉色 */
-  animation: rotate 3s linear infinite;
+  display: inline-block; color: #ff7d94;
+  animation: sakuraRotate 3s linear infinite;
 }
 
-@keyframes rotate {
+@keyframes sakuraRotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-/* 链接样式 */
-.footer-inner a {
-  color: #444;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid transparent;
-}
-
-.footer-inner a:hover {
-  color: #ff7d94;
-  border-color: #ff7d94;
-}
-
-/* 网站运行时间高亮 */
-.time {
-  margin: 10px 0 0 0;
-  color: #888;
-}
-
-#time {
-  color: #ff7d94;
-  font-weight: 500;
-  letter-spacing: 0.5px;
 }

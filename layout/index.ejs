@@ -1,32 +1,41 @@
-<div class="post-list-page">
-  <h2 class="page-heading"><%= __('recent_posts') %></h2>
-
-  <% page.posts.each(function(post) { %>
-    <article class="post-card">
-      <header class="post-card-header">
-        <h2 class="post-card-title">
-          <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-        </h2>
-        <div class="post-card-meta">
-          <svg class="icon-calendar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <time datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>">
-            <%= date(post.date, 'YYYY-MM-DD') %>
-          </time>
+<div class="index wrap">
+  <h2 class="divider"><%= __('recent_posts') %></h2>
+  <div class="segments posts">
+    <% page.posts.each(function(post) { %>
+      <article class="item" itemscope itemtype="http://schema.org/Article">
+        <% if (post.cover) { %>
+          <div class="cover">
+            <a href="<%- url_for(post.path) %>" itemprop="url" title="<%= post.title %>">
+              <img data-src="<%= post.cover %>" alt="<%= post.title %>">
+            </a>
+          </div>
+        <% } %>
+        <div class="info">
+          <div class="meta">
+            <span class="item" title="<%= __('created') %>：<%= date(post.date, 'YYYY-MM-DD HH:mm:ss') %>">
+              <span class="icon"><i class="ic i-calendar"></i></span>
+              <time itemprop="dateCreated datePublished" datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+            </span>
+          </div>
+          <h3 itemprop="name headline">
+            <a href="<%- url_for(post.path) %>" itemprop="url" title="<%= post.title %>"><%= post.title %></a>
+          </h3>
+          <div class="excerpt" itemprop="description">
+            <%- post.excerpt || truncate(strip_html(post.content), {length: 200}) %>
+          </div>
           <% if (post.categories && post.categories.length) { %>
-            <span class="meta-sep">·</span>
-            <svg class="icon-folder" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            <% post.categories.each(function(cat) { %>
-              <a class="category-link" href="<%- url_for(cat.path) %>"><%= cat.name %></a>
-            <% }) %>
+            <div class="meta footer">
+              <span>
+                <% post.categories.each(function(cat) { %>
+                  <a href="<%- url_for(cat.path) %>" itemprop="url" title="<%= cat.name %>"><i class="ic i-flag"></i><%= cat.name %></a>
+                <% }); %>
+              </span>
+            </div>
           <% } %>
+          <a href="<%- url_for(post.path) %>" itemprop="url" title="<%= post.title %>" class="btn"><%= __('read_more') %></a>
         </div>
-      </header>
-      <div class="post-card-excerpt">
-        <%- post.excerpt || post.content.slice(0, 300) %>
-      </div>
-      <a class="read-more" href="<%- url_for(post.path) %>"><%= __('read_more') %> →</a>
-    </article>
-  <% }) %>
-
+      </article>
+    <% }); %>
+  </div>
   <%- partial('partial/pagination') %>
 </div>
