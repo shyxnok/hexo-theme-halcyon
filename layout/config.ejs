@@ -1,7 +1,9 @@
 <% if (theme.sakura) { %>
     <script>
-        window.sakuraConfig = <%- JSON.stringify(theme.sakura) %>;
-        window.time = "<%- theme.buildtime %>";
+        window.config = <%- JSON.stringify({
+        sakura: theme.sakura || {},
+        time: theme.buildtime || ""
+        }) %>;
     </script>
 <% } %>
 

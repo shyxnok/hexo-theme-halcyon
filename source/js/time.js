@@ -1,7 +1,7 @@
     // 运行时间统计
     var now = new Date();
     function createtime() {
-        var grt = new Date(window.time); 
+        var grt = new Date(window.config.time); 
         now.setTime(now.getTime() + 250);
         days = (now - grt) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
         hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
