@@ -50,9 +50,6 @@ show_count: true
 # Number of recent posts to show in sidebar
 recent_posts_limits: 5
 
-# Google Analytics tracking ID (leave empty to disable)
-google_analytics:
-
 # Theme accent colors
 colors:
   accent: "#6c5ce7"
