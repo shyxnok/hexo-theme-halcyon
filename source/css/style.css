@@ -39,7 +39,7 @@
   --text-color: var(--grey-7);
 
   /* ---- Fonts ---- */
-  --font-family-logo: 'Fredericka the Great', cursive;
+  --font-family-logo: 'Fredericka', 'Fredericka the Great', cursive;
   --font-family-sans: 'Mulish', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-size-logo: 3.5em;
   --font-size-title: 1.5em;
