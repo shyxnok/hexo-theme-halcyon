@@ -36,7 +36,7 @@ const defaultConfig = {
 };
 
 // 读取布局输出的全局配置，合并覆盖
-const sakuraConfig = Object.assign({}, defaultConfig, window.sakuraGlobalConfig || {});
+const sakuraConfig = Object.assign({}, defaultConfig, window.sakuraConfig || {});
 
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;

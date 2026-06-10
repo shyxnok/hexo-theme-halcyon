@@ -69,7 +69,7 @@ sakura:
   limitTimes: -1
   size:
     min: 1
-    max: 2
+    max: 1.5
   opacity:
     min: 0.1
     max: 0.9
