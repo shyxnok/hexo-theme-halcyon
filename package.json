@@ -1,19 +1,6 @@
 {
-  "name": "hexo-theme-halcyon",
-  "version": "1.0.0",
-  "description": "A clean, modern, minimalist Hexo theme with dark mode support",
-  "author": "ShyのXnok",
-  "license": "MIT",
-  "keywords": [
-    "hexo",
-    "theme",
-    "halcyon",
-    "minimal",
-    "dark-mode",
-    "responsive"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shyxnok/hexo-theme-halcyon"
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
   }
 }
