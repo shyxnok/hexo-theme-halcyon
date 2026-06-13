@@ -57,12 +57,7 @@
   margin: 0 auto;
 }
 
-@media (min-width: 1600px) {
-  #nav .inner { width: 60%; }
-}
-@media (min-width: 1920px) {
-  #nav .inner { width: 50%; }
-}
+
 
 /* ---- Hamburger toggle ---- */
 #nav .toggle {

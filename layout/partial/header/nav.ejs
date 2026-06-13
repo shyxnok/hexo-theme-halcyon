@@ -7,34 +7,56 @@
         <span class="line"></span>
       </div>
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start" data-pjax-state="load"><%= config.author %></a></li>
-      <% for (var name in theme.menu) { %>
-        <% var value = theme.menu[name]; %>
-        <% if (typeof value === 'object' && value !== null) { %>
-          <li class="item dropdown">
-            <a class="nav-link"><%= name %></a>
-            <ul class="submenu">
-              <% for (var sub in value) { %>
-                <li class="item">
-                  <a href="<%- url_for(value[sub]) %>"><%= sub %></a>
-                </li>
-              <% } %>
-            </ul>
-          </li>
-        <% } else { %>
-          <li class="item">
-            <a href="<%- url_for(value) %>"><%= name %></a>
-          </li>
-        <% } %>
-      <% } %>
-    </ul>
+
+<ul class="menu">
+  <li class="item title"><a href="/" rel="start" data-pjax-state="load"><%= config.author %></a></li>
+  <% for (var name in theme.menu) { %>
+    <% var rawVal = theme.menu[name]; %>
+    <% if (typeof rawVal === 'string') { %>
+      <% var splitArr = rawVal.split('||'); %>
+      <% var linkUrl = splitArr[0].trim(); %>
+      <% var iconClass = splitArr[1] ? splitArr[1].trim() : ''; %>
+      <li class="item">
+        <a href="<%- url_for(linkUrl) %>">
+          <i class="halcyon i-<%= iconClass %>"></i>
+          <%= name %>
+        </a>
+      </li>
+    <% } else if (typeof rawVal === 'object' && rawVal !== null) { %>
+      <% var parentRaw = rawVal.default; %>
+      <% var parentSplit = parentRaw.split('||'); %>
+      <% var parentUrl = parentSplit[0].trim(); %>
+      <% var parentIcon = parentSplit[1] ? parentSplit[1].trim() : ''; %>
+      <li class="item dropdown">
+        <a class="nav-link" href="<%- url_for(parentUrl) %>">
+          <i class="halcyon i-<%= parentIcon %>"></i>
+          <%= name %>
+        </a>
+        <ul class="submenu">
+          <% for (var subName in rawVal) { %>
+            <% if (subName === 'default') continue; %>
+            <% var subRaw = rawVal[subName]; %>
+            <% var subSplit = subRaw.split('||'); %>
+            <% var subUrl = subSplit[0].trim(); %>
+            <% var subIcon = subSplit[1] ? subSplit[1].trim() : ''; %>
+            <li class="item">
+              <a href="<%- url_for(subUrl) %>">
+                <i class="halcyon i-<%= subIcon %>"></i>
+                <%= subName %>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </li>
+    <% } %>
+  <% } %>
+</ul>
     <ul class="right">
       <li class="item theme">
-        <i class="shyxnok i-sun"></i>
+        <i class="halcyon i-sun"></i>
       </li>
       <li class="item search">
-        <i class="shyxnok i-search"></i>
+        <i class="halcyon i-search"></i>
       </li>
     </ul>
   </div>

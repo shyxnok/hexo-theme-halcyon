@@ -37,7 +37,7 @@
             <% if (theme.social) { %>
               <% for (var name in theme.social) { %>
                 <a class="item" href="<%= theme.social[name] %>" target="_blank" rel="noopener" title="<%= name %>">
-                  <i class="ic i-<%= name.toLowerCase() %>"></i>
+                  <i class="halcyon i-<%= name.toLowerCase() %>"></i>
                 </a>
               <% } %>
             <% } %>
@@ -48,18 +48,18 @@
               <% var value = theme.menu[name]; %>
               <% if (typeof value === 'object' && value !== null) { %>
                 <li class="item dropdown">
-                  <a href="javascript:void(0);"><i class="ic i-<%= name %>"></i><%= name %></a>
+                  <a href="javascript:void(0);"><i class="halcyon i-<%= name %>"></i><%= name %></a>
                   <ul class="submenu">
                     <% for (var sub in value) { %>
                       <li class="item">
-                        <a href="<%- url_for(value[sub]) %>" rel="section"><i class="ic i-<%= sub %>"></i><%= sub %></a>
+                        <a href="<%- url_for(value[sub]) %>" rel="section"><i class="halcyon i-<%= sub %>"></i><%= sub %></a>
                       </li>
                     <% } %>
                   </ul>
                 </li>
               <% } else { %>
                 <li class="item">
-                  <a href="<%- url_for(value) %>" rel="section"><i class="ic i-<%= name %>"></i><%= name %></a>
+                  <a href="<%- url_for(value) %>" rel="section"><i class="halcyon i-<%= name %>"></i><%= name %></a>
                 </li>
               <% } %>
             <% } %>
@@ -70,8 +70,8 @@
 
     <ul id="quick">
       <li class="prev pjax"></li>
-      <li class="up"><i class="ic i-arrow-up"></i></li>
-      <li class="down"><i class="ic i-arrow-down"></i></li>
+      <li class="up"><i class="halcyon i-arrow-up"></i></li>
+      <li class="down"><i class="halcyon i-arrow-down"></i></li>
       <li class="next pjax"></li>
       <li class="percent"></li>
     </ul>

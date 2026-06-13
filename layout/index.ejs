@@ -13,7 +13,7 @@
         <div class="info">
           <div class="meta">
             <span class="item" title="<%= __('created') %>：<%= date(post.date, 'YYYY-MM-DD HH:mm:ss') %>">
-              <span class="icon"><i class="ic i-calendar"></i></span>
+              <span class="icon"><i class="halcyon i-calendar"></i></span>
               <time itemprop="dateCreated datePublished" datetime="<%= date(post.date, 'YYYY-MM-DDTHH:mm:ss') %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
             </span>
           </div>
@@ -27,7 +27,7 @@
             <div class="meta footer">
               <span>
                 <% post.categories.each(function(cat) { %>
-                  <a href="<%- url_for(cat.path) %>" itemprop="url" title="<%= cat.name %>"><i class="ic i-flag"></i><%= cat.name %></a>
+                  <a href="<%- url_for(cat.path) %>" itemprop="url" title="<%= cat.name %>"><i class="halcyon i-flag"></i><%= cat.name %></a>
                 <% }); %>
               </span>
             </div>

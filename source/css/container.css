@@ -16,6 +16,7 @@ main {
   position: relative;
   z-index: 1;
   padding: 1rem 0 2rem;
+  background-color: #fdfdfd;
 }
 
 main > .inner {

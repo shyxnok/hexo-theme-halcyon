@@ -13,14 +13,15 @@ subtitle: 成为更好的自己
 buildtime: 2026-06-01
 # Navigation menu
 menu:
-  home: /
-  about: /about
-  posts:
-    archives: /archives
-    categories: /categories
-    tags: /tags
-  friends: /friends
-  links: /links
+  home: / || house
+  posts: 
+    default: / || pen
+    archives: /archives || archive
+    categories: /categories || chart
+    tags: /tags || tag
+  friends: /friends || feather
+  links: /links || plane
+  about: /about || id
 
 # Header background images (Ken Burns crossfade slideshow)
 header_images:

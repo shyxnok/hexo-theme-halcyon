@@ -56,8 +56,8 @@
 #footer .status .time { margin-top: 0.5rem; font-size: 0.75rem; }
 
 /* Sakura rotate */
-.shyxnok.i-yinghua.rotate {
-  display: inline-block; color: #ff7d94;
+.halcyon.i-yinghua.rotate {
+  color: #ff7d94;
   animation: sakuraRotate 3s linear infinite;
 }
 

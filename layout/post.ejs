@@ -7,12 +7,12 @@
 
   <div class="meta">
     <span class="item" title="<%= __('created') %>：<%= date(page.date, 'YYYY-MM-DD HH:mm:ss') %>">
-      <span class="icon"><i class="ic i-calendar"></i></span>
+      <span class="icon"><i class="halcyon i-calendar"></i></span>
       <time itemprop="dateCreated datePublished" datetime="<%= date(page.date, 'YYYY-MM-DDTHH:mm:ss') %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
     </span>
     <% if (page.categories && page.categories.length) { %>
       <span class="item">
-        <span class="icon"><i class="ic i-flag"></i></span>
+        <span class="icon"><i class="halcyon i-flag"></i></span>
         <% page.categories.each(function(cat) { %>
           <a href="<%- url_for(cat.path) %>" itemprop="articleSection"><%= cat.name %></a>
         <% }); %>
@@ -29,7 +29,7 @@
   <% if (page.tags && page.tags.length) { %>
     <div class="tags">
       <% page.tags.each(function(tag) { %>
-        <a href="<%- url_for(tag.path) %>"><i class="ic i-tag"></i><%= tag.name %></a>
+        <a href="<%- url_for(tag.path) %>"><i class="halcyon i-tag"></i><%= tag.name %></a>
       <% }); %>
     </div>
   <% } %>
