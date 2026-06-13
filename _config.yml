@@ -22,7 +22,7 @@ menu:
   friends: /friends || feather
   links: /links || plane
   about: /about || id
-
+remembertime: 2026-04-01
 # Header background images (Ken Burns crossfade slideshow)
 image:
   host: https://pic.201562.xyz/background/
