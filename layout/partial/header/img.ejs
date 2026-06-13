@@ -1,8 +1,8 @@
-<% if (theme.header_images && theme.header_images.length) { %>
+<% if (theme.image.header_images && theme.image.header_images.length) { %>
 <div id="imgs" class="pjax">
   <ul>
-    <% theme.header_images.forEach(function(img) { %>
-      <li class="item" data-background-image="<%= img %>"></li>
+    <% theme.image.header_images.forEach(function(img) { %>
+      <li class="item" data-background-image="<%= theme.image.host %><%= img %>"></li>
     <% }); %>
   </ul>
 </div>
