@@ -3,6 +3,7 @@
    Based on Shoka design
    ============================================================ */
 
+
 #header {
   margin: 0 auto;
   position: relative;
@@ -14,9 +15,4 @@
 
 #header a:hover {
   color: currentColor;
-}
-
-#header .inner {
-  margin: 0 auto;
-  width: 100%;
 }

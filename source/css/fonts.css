@@ -15,12 +15,13 @@
 }
 .halcyon {
   font-family: "halcyon" !important;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-block;
-  margin-right: 4px; /* 图标和文字之间留白 */
+  margin-right: 0.125rem; /* 图标和文字之间留白 */
+
 }
 
 

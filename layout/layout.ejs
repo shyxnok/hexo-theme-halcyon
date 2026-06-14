@@ -5,16 +5,8 @@
   <%- partial('partial/load') %>
   <div id="container">
     <%- partial('partial/header') %>
-    <%- partial('partial/wave') %>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          <%- body %>
-        </div>
-        <%- partial('partial/sidebar') %>
-        <div class="dimmer"></div>
-      </div>
-    </main>
+    <%- partial('partial/wave') %> 
+    <%- partial('partial/main') %>
     <%- partial('partial/footer') %>
   </div>
   <%- partial('partial/scripts') %>

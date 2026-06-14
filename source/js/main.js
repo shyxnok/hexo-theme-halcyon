@@ -16,13 +16,13 @@ console.log("%c Theme.Halcyon v" + '1.0.0' + " %c https://github.com/shyxnok/hex
   function getPreferredTheme() {
     var saved = localStorage.getItem(THEME_KEY);
     if (saved === 'dark' || saved === 'light') return saved;
+  
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
   function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
-
     var hljsLight = document.getElementById('hljs-light');
     var hljsDark = document.getElementById('hljs-dark');
     if (hljsLight && hljsDark) {
@@ -46,11 +46,12 @@ console.log("%c Theme.Halcyon v" + '1.0.0' + " %c https://github.com/shyxnok/hex
     themeBtn.addEventListener('click', function () {
       currentTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       applyTheme(currentTheme);
-
+      console.log('Theme set to:', currentTheme);
       // Toggle icon class
-      var icon = this.querySelector('.ic');
+      var icon = this.querySelector('.halcyon');
       if (icon) {
         if (currentTheme === 'dark') {
+           var icon = this.querySelector('.halcyon');
           icon.classList.remove('i-sun');
           icon.classList.add('i-moon');
         } else {

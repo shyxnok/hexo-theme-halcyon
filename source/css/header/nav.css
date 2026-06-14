@@ -11,6 +11,10 @@
   width: 100%;
   height: 3.125rem;
   transition: all var(--transition-duration) var(--transition-ease);
+  background-color: var(--nav-bg);
+  background: rgba(230, 213, 213, 0.143);  /* 半透明底色，可改透明度 */
+  backdrop-filter: blur(8px);     /* 毛玻璃模糊强度 */
+  -webkit-backdrop-filter: blur(8px); /* 兼容 Safari / 旧版webkit */
 }
 
 /* Hide/show on scroll */
@@ -52,7 +56,7 @@
 #nav .inner {
   height: 100%;
   display: flex;
-  width: 70%;
+  width: 75%;
   flex-wrap: nowrap;
   margin: 0 auto;
 }
@@ -73,8 +77,8 @@
 }
 
 #nav .toggle .lines {
-  padding: 1.25rem;
-  width: 1.375rem;
+  padding: 0.9rem;
+  width: 0.9rem;
   box-sizing: unset;
   cursor: pointer;
 }
@@ -107,7 +111,9 @@
   width: 100%;
   list-style: none;
   display: flex;
+  align-items: center;
 }
+
 
 #nav .menu .item {
   display: inline-block;
@@ -122,32 +128,43 @@
 }
 
 /* ---- Menu links ---- */
-#nav .menu .item:not(.title) a {
+#nav .menu .item a {
   display: block;
-  font-size: 0.9375rem;
-  color: inherit;
+  font-size: 1rem;
+  color: var(--header-text-color);
   text-decoration: none;
   transition: all var(--transition-duration) var(--transition-ease);
   position: relative;
+  
 }
 
 /* Hover underline animation */
 #nav .menu .item:not(.title) a::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: -0.6rem;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 2px;
+  height: 0.2rem;
   background-image: linear-gradient(to right, var(--color-pink) 0, var(--color-orange) 100%);
   transition: width var(--transition-duration) var(--transition-ease);
+  border-radius: 2rem; 
 }
 
-#nav .menu .item.active:not(.dropdown) a::before,
-#nav .menu .item:not(.dropdown):hover a::before {
-  width: 70%;
+#nav .menu .item.active a::before,
+#nav .menu .item:hover a::before {
+  width: 90%;
+  color:  var(--color-pink);
 }
+#nav .menu .item.active a,
+#nav .menu .item:hover a {
+  /* 文字渐变，和下划线一模一样 */
+  background-image: linear-gradient(to right, var(--color-pink), var(--color-orange));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 
 /* Title item */
 #nav .menu .item.title {
@@ -155,7 +172,7 @@
 }
 #nav .menu .item.title a {
   font-weight: 600;
-  color: inherit;
+  color: var(--header-text-color);
   text-decoration: none;
 }
 
@@ -179,17 +196,31 @@
 #nav .menu .submenu {
   display: none;
   position: absolute;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   padding: 0;
   width: max-content;
-  background-color: var(--grey-9-a5);
+  background-color: #c8b2b2;
+  color: var(--header-text-color);
   box-shadow: 0 0.3125rem 1.25rem -0.25rem var(--grey-9-a1);
   border-radius: 0.625rem 0;
   list-style: none;
   z-index: var(--zindex-1);
   animation: slideUpIn 0.2s ease;
 }
+/* 子菜单项：清除默认偏移、统一内边距，左对齐排版 */
+#nav .menu .submenu .item {
+  display: block;
+  padding: 0rem 0.3rem; /* 上下+左右内边距，控制高度和左右留白 */
+  text-align: left;    /* 文字强制左对齐 */
+}
 
+/* 子菜单链接：填满整行，文字从头排列 */
+#nav .menu .submenu .item a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: var(--header-text-color);
+}
 @keyframes slideUpIn {
   from {
     opacity: 0;
@@ -266,6 +297,7 @@
 #nav .right .item {
   display: inline-flex;
   align-items: center;
+  color: var(--header-text-color);
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
@@ -275,21 +307,41 @@
 }
 #nav .right .item:hover {
   opacity: 1;
+  color: var(--color-pink);
+  -webkit-background-clip: text;
 }
 
 #nav .right .item .ic {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 /* ============================================================
    Responsive — Mobile
    ============================================================ */
+@media (max-width:1800px) {
+  #nav .inner {
+    width: 80%;
+  }
+}
+
+
+@media (max-width:1600px) {
+  #nav .inner {
+    width: 90%;
+  }
+}
+
+
+
 @media (max-width: 768px) {
   #nav .menu .item {
     display: none;
   }
   #nav .menu .item.title {
     display: block;
+  }
+  #nav .menu {
+    justify-content: center;
   }
 
   /* Mobile menu open */
